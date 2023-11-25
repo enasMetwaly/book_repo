@@ -1,0 +1,98 @@
+from django.shortcuts import render
+
+# Create your views here.
+from .forms import *
+from .serializers import *
+from rest_framework import generics
+from .serializers import *
+from rest_framework.response import Response
+from rest_framework import generics, status
+
+
+
+class ListBooksView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class CreateBookView(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        price = data.get('price')
+        stock = data.get('stock')
+        pages = data.get('pages')
+
+        # Your custom validation
+        try:
+            price = int(price)
+            stock = int(stock)
+            pages = int(pages)
+        except ValueError:
+            return Response({"error": "Invalid input for price, stock, or pages. Please provide valid integers."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if price <= 0:
+            return Response({"price": "Price must be a positive integer."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if stock < 50:
+            return Response({"stock": "Stock must be a positive integer."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if pages <= 10:
+            return Response({"pages": "Pages must be a positive integer greater than zero."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    
+class UpdateBookView(generics.RetrieveUpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    def put(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class BookDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    
+class DeleteBookView(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    
+class CategoryList(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    
+    
+class CreateCategoryView(generics.CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+class UpdateCategoryView(generics.RetrieveUpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+    
+
+class CategoryDetailsView(generics.RetrieveAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+    
+class DeleteCategoryView(generics.DestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer    
+    
