@@ -1,0 +1,29 @@
+/* UserDetail.css */
+
+.user-detail {
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+  }
+  
+  .inf-content {
+    padding: 20px;
+  }
+  
+  .img-circle {
+    width: 150px;
+  }
+  
+  .ratings {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .ratings li {
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  /* Add more styles as needed */
+  
