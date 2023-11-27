@@ -1,0 +1,13 @@
+.card {
+  margin: 0; /* Remove any default margins */
+}
+
+.imagee {
+  width: 100% !important; 
+  height: 150px!important;
+  /* other styles... */
+}
+
+.overlay {
+  /* overlay styles... */
+}

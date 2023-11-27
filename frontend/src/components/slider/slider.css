@@ -1,0 +1,62 @@
+html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.mydiv{
+    height: 600px;
+    background: rgb(22, 22, 49);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.slide {
+  min-width: 50%;
+  height: 60vh;
+  font-size: 50px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  height: 100%;
+  object-fit: contain;
+}
+
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  z-index: 1;
+  font-size: 20px;
+  top: 46%;
+  color: white;
+  
+  border-radius: 9999px;
+  padding: 4px 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.left-arrow {
+  left: 5%;
+}
+
+.right-arrow {
+  right: 5%;
+}
